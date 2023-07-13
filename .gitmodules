@@ -1,0 +1,23 @@
+[submodule "third_party/cosmopolitan"]
+	path = third_party/cosmopolitan
+	url = https://github.com/jart/cosmopolitan.git
+    ignore = all
+    shallow = true
+
+[submodule "third_party/libxml2"]
+	path = third_party/libxml2
+	url = https://gitlab.gnome.org/GNOME/libxml2.git
+	ignore = all
+	shallow = true
+
+[submodule "third_party/libxslt"]
+	path = third_party/libxslt
+	url = https://gitlab.gnome.org/GNOME/libxslt.git
+	ignore = all
+	shallow = true
+
+[submodule "third_party/libslax"]
+	path = third_party/libslax
+	url = https://github.com/Juniper/libslax.git
+    ignore = all
+    shallow = true

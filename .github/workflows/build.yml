@@ -1,0 +1,59 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    name: Build
+    steps:
+      - name: Checkout the Repository
+        uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Remove useless packages
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -qq --autoremove --purge --no-install-recommends -y \
+            '*-dev-' \
+            build-essential \
+            autoconf \
+            automake \
+            autotools-dev \
+            bison \
+            curl \
+            dpkg-dev \
+            libc-dev \
+            libc6-dev \
+            libcrypt-dev \
+            libgcc-11-dev \
+            libltdl-dev \
+            libnsl-dev \
+            libstdc++-11-dev \
+            libtirpc-dev \
+            libtool \
+            linux-libc-dev \
+            m4 \
+            make
+
+      - name: Build
+        run: ./build.sh
+
+      - name: Archive on success
+        if: success()
+        uses: actions/upload-artifact@v3
+        with:
+          path: dist/slaxproc
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          fail_on_unmatched_files: true
+          files: dist/slaxproc
